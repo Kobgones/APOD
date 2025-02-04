@@ -1,34 +1,69 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react"
 
 const Apod = () => {
-  const apiKey = process.env.REACT_APP_NASA_API_KEY
+	const apiKey = process.env.REACT_APP_NASA_API_KEY
+	const [photo, setPhoto] = useState([])
+	const [loading, setLoading] = useState(true)
 
-  console.log("apiKey", apiKey)
+	useEffect(() => {
+		fetch(`https://api.nasa.gov/planetary/apod?api_key=${apiKey}`)
+			.then((response) => response.json())
+			.then((result) => {
+				setPhoto(result)
+				setLoading(false)
+			})
+			.catch((err) => {
+				console.error(err)
+				setLoading(false)
+			})
+	}, [apiKey])
 
-  const [photo, setPhoto] = useState([]);
+	if (loading) {
+		return (
+			<div className="bg-black flex items-center justify-center">
+				<div className="text-white text-2xl">
+					Loading amazing space content...
+				</div>
+			</div>
+		)
+	}
 
-  useEffect(() => {
-    fetch(`https://api.nasa.gov/planetary/apod?api_key=${apiKey}`)
-      .then((response) => response.json())
-      .then((result) => {
-        setPhoto(result);
-      })
-      .catch((err) => console.error(err));
-  }, []);
+	return (
+		<div className="h-screen bg-black flex items-center justify-center p-6">
+			<div className="bg-gray-900/50 backdrop-blur-sm rounded-lg w-full max-w-7xl overflow-hidden">
+				<h1 className="text-2xl md:text-3xl text-white font-automn font-bold text-center py-4 px-6 border-b border-gray-700">
+					{photo.title}
+				</h1>
+				
+				<div className="flex flex-row p-6 gap-6">
+					<div className="w-3/5">
+						<img
+							className="w-full h-full object-contain rounded-lg shadow-xl cursor-pointer hover:scale-[1.01] transition-transform duration-300"
+							src={photo.hdurl}
+							alt={photo.title}
+							onClick={() => window.open(photo.url, '_blank')}
+						/>
+					</div>
 
-  return (
-    <div className="bg-black">
-      <div className="flex flex-col items-center justify-center gap-6">
-        <h1 className="text-center text-4xl text-white font-automn pt-4">
-          {photo.title}
-        </h1>
-        <img className="w-3/4 h-3/4" src={photo.hdurl} alt={photo.title} />
-        <p className="text-center text-white font-automn">
-          {photo.explanation}
-        </p>
-      </div>
-    </div>
-  );
-};
+					<div className="w-2/5 flex flex-col gap-4">
+						<p className="text-white text-sm text-center border-b border-gray-700 pb-2">
+							Date: {photo.date}
+						</p>
+						<div className="overflow-y-auto pr-2">
+							<p className="text-sm md:text-base text-white font-automn leading-relaxed">
+								{photo.explanation}
+							</p>
+							{photo.copyright && (
+								<p className="text-gray-400 text-sm text-right mt-4">
+									© {photo.copyright}
+								</p>
+							)}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	)
+}
 
-export default Apod;
+export default Apod
