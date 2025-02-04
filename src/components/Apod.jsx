@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 
 const Apod = () => {
-  const apiKey = "WoGj5OiYurzgawyALRCcqVuoU279rbFlQaviHMke";
+  const apiKey = process.env.REACT_APP_NASA_API_KEY
+
+  console.log("apiKey", apiKey)
 
   const [photo, setPhoto] = useState([]);
 
