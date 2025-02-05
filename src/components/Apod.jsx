@@ -34,15 +34,25 @@ const Apod = () => {
 				<h1 className="text-2xl md:text-3xl text-white font-automn font-bold text-center py-4 px-6 border-b border-gray-700">
 					{photo.title}
 				</h1>
-				
+
 				<div className="flex flex-row p-6 gap-6">
 					<div className="w-3/5">
-						<img
-							className="w-full h-full object-contain rounded-lg shadow-xl cursor-pointer hover:scale-[1.01] transition-transform duration-300"
-							src={photo.hdurl}
-							alt={photo.title}
-							onClick={() => window.open(photo.url, '_blank')}
-						/>
+						{photo.media_type === "video" ? (
+							<iframe
+								className="w-full aspect-video rounded-lg shadow-xl border-0 bg-black"
+								src={photo.url}
+								title={photo.title}
+								allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+								allowFullScreen
+							/>
+						) : (
+							<img
+								className="w-full h-full object-contain rounded-lg shadow-xl cursor-pointer hover:scale-[1.01] transition-transform duration-300"
+								src={photo.hdurl}
+								alt={photo.title}
+								onClick={() => window.open(photo.url, "_blank")}
+							/>
+						)}
 					</div>
 
 					<div className="w-2/5 flex flex-col gap-4">
@@ -51,11 +61,16 @@ const Apod = () => {
 						</p>
 						<div className="overflow-y-auto pr-2">
 							<p className="text-sm md:text-base text-white font-automn leading-relaxed">
-								{photo.explanation}
+								{
+									photo.explanation
+								}
 							</p>
 							{photo.copyright && (
 								<p className="text-gray-400 text-sm text-right mt-4">
-									© {photo.copyright}
+									©{" "}
+									{
+										photo.copyright
+									}
 								</p>
 							)}
 						</div>

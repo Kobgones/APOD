@@ -1,16 +1,18 @@
-import "./App.css";
-import NavBar from "./components/NavBar";
-import Apod from "./components/Apod";
+import React from "react"
+import { BrowserRouter as Router } from "react-router-dom"
+import NavBar from "./components/NavBar"
+import AppRoutes from "./components/Routes"
+import "./App.css"
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <NavBar />
-        <Apod />
-      </header>
-    </div>
-  );
+    return (
+        <Router>
+            <div className="min-h-screen bg-black">
+                <NavBar />
+                <AppRoutes />
+            </div>
+        </Router>
+    )
 }
 
-export default App;
+export default App
