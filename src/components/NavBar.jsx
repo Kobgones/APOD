@@ -22,19 +22,19 @@ const NavBar = () => {
             to="/"
             className="text-white hover:text-yellow-300 transition-colors font-semibold"
           >
-            APOD
+            Picture of the Day
           </Link>
           <Link
             to="/mars-rover"
             className="text-white hover:text-yellow-300 transition-colors font-semibold"
           >
-            Mars Rover
+            Mars Rover Images
           </Link>
           <Link
             to="/asteroid"
             className="text-white hover:text-yellow-300 transition-colors font-semibold"
           >
-            Asteroid
+            Asteroid Near Earth
           </Link>
         </div>
       </div>
